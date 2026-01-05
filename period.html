@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>تفاصيل الفترة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2 id="periodTitle"></h2>
+
+    <!-- معلومات الفترة -->
+    <div class="card"><p id="periodBudget"></p></div>
+    <div class="card"><p id="periodSpent"></p></div>
+    <div class="card"><p id="periodRemaining"></p></div>
+
+    <!-- شريط نسبة الصرف -->
+    <h3>نسبة الصرف</h3>
+    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
+        <div id="periodBar"
+             style="height:30px; width:0%; background:green;
+                    color:white; text-align:center; border-radius:20px;">
+            0%
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- تصدير -->
+    <button onclick="exportPeriodExpenses()">📤 تصدير مصروفات هذه الفترة</button>
+
+    <h3>سجل مصروفات هذه الفترة</h3>
+    <ul id="periodExpenseList"></ul>
+
+    <br>
+    <button onclick="goBack()">رجوع</button>
+
+</div> <!-- نهاية container -->
+
+<script src="script.js"></script>
+<script>
+    loadPeriodDetails();
+</script>
+
+</body>
+</html>

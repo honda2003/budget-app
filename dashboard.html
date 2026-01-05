@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة المتابعة</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>لوحة المتابعة</h2>
+
+    <!-- معلومات الميزانية -->
+    <div class="card"><p id="totalBudget"></p></div>
+    <div class="card"><p id="spentAmount"></p></div>
+    <div class="card"><p id="remainingAmount"></p></div>
+
+    <!-- شريط النسبة الشهري -->
+    <h4>نسبة الصرف</h4>
+    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
+        <div id="progressBar"
+             style="height:30px; width:0%; background:green;
+                    color:white; text-align:center;
+                    border-radius:20px;">
+            0%
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- إضافة مصروف -->
+    <h3>إضافة مصروف</h3>
+    <input type="number" id="expenseInput" placeholder="أدخل مبلغ المصروف">
+    <button onclick="addExpense()">إضافة</button>
+
+    <hr>
+
+    <!-- اختيار الفترة -->
+    <h6>اختيار الفترة لإضافة المصروف</h6>
+    <button class="period" onclick="selectPeriod(1)">الأيام 1 - 10</button>
+    <button class="period" onclick="selectPeriod(2)">الأيام 11 - 20</button>
+    <button class="period" onclick="selectPeriod(3)">الأيام 21 - 30</button>
+    <p id="currentPeriodText"></p>
+
+    <hr>
+
+    <!-- تفاصيل الفترات -->
+    <h3>عرض تفاصيل كل فترة</h3>
+    <button class="period" onclick="openPeriodDetails(1)">تفاصيل الأيام 1 - 10</button>
+    <button class="period" onclick="openPeriodDetails(2)">تفاصيل الأيام 11 - 20</button>
+    <button class="period" onclick="openPeriodDetails(3)">تفاصيل الأيام 21 - 30</button>
+
+    <hr>
+
+    <!-- أشرطة الفترات -->
+    <p>الأيام 1 - 10</p>
+    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
+        <div id="p1Bar" style="height:25px; width:0%; background:green; color:white; text-align:center; border-radius:20px;">
+            0%
+        </div>
+    </div>
+
+    <p>الأيام 11 - 20</p>
+    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
+        <div id="p2Bar" style="height:25px; width:0%; background:green; color:white; text-align:center; border-radius:20px;">
+            0%
+        </div>
+    </div>
+
+    <p>الأيام 21 - 30</p>
+    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
+        <div id="p3Bar" style="height:25px; width:0%; background:green; color:white; text-align:center; border-radius:20px;">
+            0%
+        </div>
+    </div>
+
+</div> <!-- نهاية container -->
+
+<script src="script.js"></script>
+<script>
+    loadDashboard();
+</script>
+
+</body>
+</html>
