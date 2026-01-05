@@ -1,11 +1,11 @@
 /* =========================
-   حفظ الميزانية
+   Save Budget
    ========================= */
 function saveBudget() {
     let budget = Math.floor(Number(document.getElementById("budgetInput").value));
 
     if (!budget || budget <= 0) {
-        alert("من فضلك أدخل مبلغ صحيح");
+        alert("Please enter a valid amount");
         return;
     }
 
@@ -21,7 +21,7 @@ function saveBudget() {
 }
 
 /* =========================
-   لوحة المتابعة
+   Dashboard
    ========================= */
 function loadDashboard() {
     let budget = Number(localStorage.getItem("monthlyBudget")) || 0;
@@ -30,9 +30,9 @@ function loadDashboard() {
     let remaining = budget - spent;
     if (remaining < 0) remaining = 0;
 
-    document.getElementById("totalBudget").innerText = "💼 الميزانية: " + budget;
-    document.getElementById("spentAmount").innerText = "💸 المصروف: " + spent;
-    document.getElementById("remainingAmount").innerText = "💰 المتبقي: " + remaining;
+    document.getElementById("totalBudget").innerText = "💼 Budget: " + budget;
+    document.getElementById("spentAmount").innerText = "💸 Spent: " + spent;
+    document.getElementById("remainingAmount").innerText = "💰 Remaining: " + remaining;
 
     let percent = 0;
     if (budget > 0) percent = Math.floor((spent / budget) * 100);
@@ -47,34 +47,34 @@ function loadDashboard() {
 }
 
 /* =========================
-   اختيار فترة
+   Select Period
    ========================= */
 function selectPeriod(period) {
     localStorage.setItem("currentPeriod", period);
 
     document.getElementById("currentPeriodText").innerText =
-        period == 1 ? "الفترة: 1 - 10" :
-        period == 2 ? "الفترة: 11 - 20" :
-                      "الفترة: 21 - 30";
+        period == 1 ? "Current period: Days 1 - 10" :
+        period == 2 ? "Current period: Days 11 - 20" :
+                      "Current period: Days 21 - 30";
 
     document.querySelectorAll(".period").forEach(b => b.classList.remove("active"));
     document.querySelectorAll(".period")[period - 1].classList.add("active");
 }
 
 /* =========================
-   إضافة مصروف
+   Add Expense
    ========================= */
 function addExpense() {
     let expense = Math.floor(Number(document.getElementById("expenseInput").value));
     let period = localStorage.getItem("currentPeriod");
 
     if (!period) {
-        alert("اختر فترة أولاً");
+        alert("Please select a period first");
         return;
     }
 
     if (!expense || expense <= 0) {
-        alert("أدخل مبلغ صحيح");
+        alert("Please enter a valid expense amount");
         return;
     }
 
@@ -89,7 +89,7 @@ function addExpense() {
     let percent = Math.floor((newTotal / periodBudget) * 100);
 
     if (percent >= 95) {
-        alert("❌ تجاوزت ميزانية هذه الفترة");
+        alert("❌ You have exceeded this period's budget");
         return;
     }
 
@@ -109,7 +109,7 @@ function addExpense() {
 }
 
 /* =========================
-   أشرطة الفترات
+   Period Progress Bars
    ========================= */
 function updatePeriodBars() {
     let budget = Number(localStorage.getItem("monthlyBudget"));
@@ -136,7 +136,7 @@ function updateSingleBar(id, spent, budget) {
 }
 
 /* =========================
-   تفاصيل الفترة
+   Period Details
    ========================= */
 function openPeriodDetails(period) {
     localStorage.setItem("currentPeriod", period);
@@ -154,13 +154,13 @@ function loadPeriodDetails() {
     if (remaining < 0) remaining = 0;
 
     document.getElementById("periodTitle").innerText =
-        period == 1 ? "الأيام 1 - 10" :
-        period == 2 ? "الأيام 11 - 20" :
-                      "الأيام 21 - 30";
+        period == 1 ? "Days 1 - 10" :
+        period == 2 ? "Days 11 - 20" :
+                      "Days 21 - 30";
 
-    document.getElementById("periodBudget").innerText = "الميزانية: " + periodBudget;
-    document.getElementById("periodSpent").innerText = "المصروف: " + spent;
-    document.getElementById("periodRemaining").innerText = "المتبقي: " + remaining;
+    document.getElementById("periodBudget").innerText = "Budget: " + periodBudget;
+    document.getElementById("periodSpent").innerText = "Spent: " + spent;
+    document.getElementById("periodRemaining").innerText = "Remaining: " + remaining;
 
     let percent = Math.floor((spent / periodBudget) * 100);
     if (percent > 100) percent = 100;
@@ -174,7 +174,7 @@ function loadPeriodDetails() {
 }
 
 /* =========================
-   سجل الفترة
+   Period Expense List
    ========================= */
 function renderPeriodExpenseList() {
     let list = document.getElementById("periodExpenseList");
@@ -188,7 +188,7 @@ function renderPeriodExpenseList() {
         .sort((a, b) => new Date(b.date) - new Date(a.date));
 
     if (filtered.length === 0) {
-        list.innerHTML = "<li>لا توجد مصروفات</li>";
+        list.innerHTML = "<li>No expenses recorded</li>";
         return;
     }
 
@@ -200,7 +200,7 @@ function renderPeriodExpenseList() {
 }
 
 /* =========================
-   تصدير CSV
+   Export CSV
    ========================= */
 function exportPeriodExpenses() {
     let period = localStorage.getItem("currentPeriod");
@@ -208,11 +208,11 @@ function exportPeriodExpenses() {
         .filter(e => e.period == period);
 
     if (expenses.length === 0) {
-        alert("لا توجد مصروفات");
+        alert("No expenses to export");
         return;
     }
 
-    let csv = "المبلغ,التاريخ\n";
+    let csv = "Amount,Date\n";
     expenses.forEach(e => {
         csv += `${e.amount},${e.date.split("T")[0]}\n`;
     });
@@ -225,7 +225,7 @@ function exportPeriodExpenses() {
 }
 
 /* =========================
-   رجوع
+   Back
    ========================= */
 function goBack() {
     window.location.href = "dashboard.html";

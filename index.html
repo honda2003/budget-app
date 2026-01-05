@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ميزانية الأكل</title>
+    <title>Food Budget</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="start-page">
 
 <div class="container">
-    <h2>ميزانية الأكل الشهرية</h2>
 
-    <input type="number" id="budgetInput" placeholder="أدخل الميزانية">
-    <button onclick="saveBudget()">التالي</button>
+    <h2>Set Your Monthly Food Budget</h2>
+
+    <p style="text-align:center; font-size:14px; color:#555;">
+        Enter the total amount you plan to spend on food this month
+    </p>
+
+    <input type="number" id="budgetInput" placeholder="Monthly budget amount">
+    <button onclick="saveBudget()">Continue</button>
+
 </div>
 
 <script src="script.js"></script>

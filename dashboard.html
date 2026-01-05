@@ -1,81 +1,77 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة المتابعة</title>
+    <title>Monthly Overview</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
-    <h2>لوحة المتابعة</h2>
+    <h2>Monthly Overview</h2>
 
-    <!-- معلومات الميزانية -->
-    <div class="card"><p id="totalBudget"></p></div>
-    <div class="card"><p id="spentAmount"></p></div>
-    <div class="card"><p id="remainingAmount"></p></div>
+    <!-- Budget Summary -->
+    <div class="card">
+        <p id="totalBudget"></p>
+    </div>
+    <div class="card">
+        <p id="spentAmount"></p>
+    </div>
+    <div class="card">
+        <p id="remainingAmount"></p>
+    </div>
 
-    <!-- شريط النسبة الشهري -->
-    <h4>نسبة الصرف</h4>
-    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
-        <div id="progressBar"
-             style="height:30px; width:0%; background:green;
-                    color:white; text-align:center;
-                    border-radius:20px;">
-            0%
-        </div>
+    <!-- Monthly Progress -->
+    <h4>Spending Progress</h4>
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar">0%</div>
     </div>
 
     <hr>
 
-    <!-- إضافة مصروف -->
-    <h3>إضافة مصروف</h3>
-    <input type="number" id="expenseInput" placeholder="أدخل مبلغ المصروف">
-    <button onclick="addExpense()">إضافة</button>
+    <!-- Add Expense -->
+    <h3>Add a New Expense</h3>
+    <input type="number" id="expenseInput" placeholder="Expense amount">
+    <button onclick="addExpense()">Add Expense</button>
 
     <hr>
 
-    <!-- اختيار الفترة -->
-    <h6>اختيار الفترة لإضافة المصروف</h6>
-    <button class="period" onclick="selectPeriod(1)">الأيام 1 - 10</button>
-    <button class="period" onclick="selectPeriod(2)">الأيام 11 - 20</button>
-    <button class="period" onclick="selectPeriod(3)">الأيام 21 - 30</button>
-    <p id="currentPeriodText"></p>
+    <!-- Select Period -->
+    <h6>Choose when this expense occurred</h6>
+    <button class="period" onclick="selectPeriod(1)">Days 1 – 10</button>
+    <button class="period" onclick="selectPeriod(2)">Days 11 – 20</button>
+    <button class="period" onclick="selectPeriod(3)">Days 21 – 30</button>
+
+    <p id="currentPeriodText" style="text-align:center; font-size:14px;"></p>
 
     <hr>
 
-    <!-- تفاصيل الفترات -->
-    <h3>عرض تفاصيل كل فترة</h3>
-    <button class="period" onclick="openPeriodDetails(1)">تفاصيل الأيام 1 - 10</button>
-    <button class="period" onclick="openPeriodDetails(2)">تفاصيل الأيام 11 - 20</button>
-    <button class="period" onclick="openPeriodDetails(3)">تفاصيل الأيام 21 - 30</button>
+    <!-- Period Details -->
+    <h3>View Period Details</h3>
+    <button class="period" onclick="openPeriodDetails(1)">Details: Days 1 – 10</button>
+    <button class="period" onclick="openPeriodDetails(2)">Details: Days 11 – 20</button>
+    <button class="period" onclick="openPeriodDetails(3)">Details: Days 21 – 30</button>
 
     <hr>
 
-    <!-- أشرطة الفترات -->
-    <p>الأيام 1 - 10</p>
-    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
-        <div id="p1Bar" style="height:25px; width:0%; background:green; color:white; text-align:center; border-radius:20px;">
-            0%
-        </div>
+    <!-- Period Progress Bars -->
+    <p style="text-align:center;">Days 1 – 10</p>
+    <div class="progress-container">
+        <div id="p1Bar" class="progress-bar">0%</div>
     </div>
 
-    <p>الأيام 11 - 20</p>
-    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
-        <div id="p2Bar" style="height:25px; width:0%; background:green; color:white; text-align:center; border-radius:20px;">
-            0%
-        </div>
+    <p style="text-align:center;">Days 11 – 20</p>
+    <div class="progress-container">
+        <div id="p2Bar" class="progress-bar">0%</div>
     </div>
 
-    <p>الأيام 21 - 30</p>
-    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
-        <div id="p3Bar" style="height:25px; width:0%; background:green; color:white; text-align:center; border-radius:20px;">
-            0%
-        </div>
+    <p style="text-align:center;">Days 21 – 30</p>
+    <div class="progress-container">
+        <div id="p3Bar" class="progress-bar">0%</div>
     </div>
 
-</div> <!-- نهاية container -->
+</div>
 
 <script src="script.js"></script>
 <script>

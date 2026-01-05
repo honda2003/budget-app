@@ -1,47 +1,81 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>تفاصيل الفترة</title>
+    <title>Monthly Overview</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
-    <h2 id="periodTitle"></h2>
+    <h2>Monthly Overview</h2>
 
-    <!-- معلومات الفترة -->
-    <div class="card"><p id="periodBudget"></p></div>
-    <div class="card"><p id="periodSpent"></p></div>
-    <div class="card"><p id="periodRemaining"></p></div>
+    <!-- Budget Summary -->
+    <div class="card">
+        <p id="totalBudget"></p>
+    </div>
+    <div class="card">
+        <p id="spentAmount"></p>
+    </div>
+    <div class="card">
+        <p id="remainingAmount"></p>
+    </div>
 
-    <!-- شريط نسبة الصرف -->
-    <h3>نسبة الصرف</h3>
-    <div style="width:80%; background:#ddd; border-radius:20px; margin:auto;">
-        <div id="periodBar"
-             style="height:30px; width:0%; background:green;
-                    color:white; text-align:center; border-radius:20px;">
-            0%
-        </div>
+    <!-- Monthly Progress -->
+    <h4>Spending Progress</h4>
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar">0%</div>
     </div>
 
     <hr>
 
-    <!-- تصدير -->
-    <button onclick="exportPeriodExpenses()">📤 تصدير مصروفات هذه الفترة</button>
+    <!-- Add Expense -->
+    <h3>Add a New Expense</h3>
+    <input type="number" id="expenseInput" placeholder="Expense amount">
+    <button onclick="addExpense()">Add Expense</button>
 
-    <h3>سجل مصروفات هذه الفترة</h3>
-    <ul id="periodExpenseList"></ul>
+    <hr>
 
-    <br>
-    <button onclick="goBack()">رجوع</button>
+    <!-- Select Period -->
+    <h6>Choose when this expense occurred</h6>
+    <button class="period" onclick="selectPeriod(1)">Days 1 – 10</button>
+    <button class="period" onclick="selectPeriod(2)">Days 11 – 20</button>
+    <button class="period" onclick="selectPeriod(3)">Days 21 – 30</button>
 
-</div> <!-- نهاية container -->
+    <p id="currentPeriodText" style="text-align:center; font-size:14px;"></p>
+
+    <hr>
+
+    <!-- Period Details -->
+    <h3>View Period Details</h3>
+    <button class="period" onclick="openPeriodDetails(1)">Details: Days 1 – 10</button>
+    <button class="period" onclick="openPeriodDetails(2)">Details: Days 11 – 20</button>
+    <button class="period" onclick="openPeriodDetails(3)">Details: Days 21 – 30</button>
+
+    <hr>
+
+    <!-- Period Progress Bars -->
+    <p style="text-align:center;">Days 1 – 10</p>
+    <div class="progress-container">
+        <div id="p1Bar" class="progress-bar">0%</div>
+    </div>
+
+    <p style="text-align:center;">Days 11 – 20</p>
+    <div class="progress-container">
+        <div id="p2Bar" class="progress-bar">0%</div>
+    </div>
+
+    <p style="text-align:center;">Days 21 – 30</p>
+    <div class="progress-container">
+        <div id="p3Bar" class="progress-bar">0%</div>
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 <script>
-    loadPeriodDetails();
+    loadDashboard();
 </script>
 
 </body>
