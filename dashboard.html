@@ -12,15 +12,9 @@
     <h2>Monthly Overview</h2>
 
     <!-- Budget Summary -->
-    <div class="card">
-        <p id="totalBudget"></p>
-    </div>
-    <div class="card">
-        <p id="spentAmount"></p>
-    </div>
-    <div class="card">
-        <p id="remainingAmount"></p>
-    </div>
+    <div class="card"><p id="totalBudget"></p></div>
+    <div class="card"><p id="spentAmount"></p></div>
+    <div class="card"><p id="remainingAmount"></p></div>
 
     <!-- Monthly Progress -->
     <h4>Spending Progress</h4>
@@ -43,15 +37,24 @@
     <button class="period" onclick="selectPeriod(2)">Days 11 – 20</button>
     <button class="period" onclick="selectPeriod(3)">Days 21 – 30</button>
 
-    <p id="currentPeriodText" style="text-align:center; font-size:14px;"></p>
+    <p id="currentPeriodText" style="text-align:center;font-size:14px;"></p>
 
     <hr>
 
-    <!-- Period Details -->
+    <!-- Period Details (FIXED) -->
     <h3>View Period Details</h3>
-    <button class="period" onclick="openPeriodDetails(1)">Details: Days 1 – 10</button>
-    <button class="period" onclick="openPeriodDetails(2)">Details: Days 11 – 20</button>
-    <button class="period" onclick="openPeriodDetails(3)">Details: Days 21 – 30</button>
+
+    <a href="period.html" class="period link-btn" onclick="localStorage.setItem('currentPeriod',1)">
+        Details: Days 1 – 10
+    </a>
+
+    <a href="period.html" class="period link-btn" onclick="localStorage.setItem('currentPeriod',2)">
+        Details: Days 11 – 20
+    </a>
+
+    <a href="period.html" class="period link-btn" onclick="localStorage.setItem('currentPeriod',3)">
+        Details: Days 21 – 30
+    </a>
 
     <hr>
 

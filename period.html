@@ -2,80 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Monthly Overview</title>
+    <title>Period Details</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
-    <h2>Monthly Overview</h2>
+    <h2 id="periodTitle"></h2>
 
-    <!-- Budget Summary -->
+    <!-- Period Summary -->
     <div class="card">
-        <p id="totalBudget"></p>
-    </div>
-    <div class="card">
-        <p id="spentAmount"></p>
+        <p id="periodBudget"></p>
     </div>
     <div class="card">
-        <p id="remainingAmount"></p>
+        <p id="periodSpent"></p>
+    </div>
+    <div class="card">
+        <p id="periodRemaining"></p>
     </div>
 
-    <!-- Monthly Progress -->
-    <h4>Spending Progress</h4>
+    <!-- Period Progress -->
+    <h3>Spending Progress</h3>
     <div class="progress-container">
-        <div id="progressBar" class="progress-bar">0%</div>
+        <div id="periodBar" class="progress-bar">0%</div>
     </div>
 
     <hr>
 
-    <!-- Add Expense -->
-    <h3>Add a New Expense</h3>
-    <input type="number" id="expenseInput" placeholder="Expense amount">
-    <button onclick="addExpense()">Add Expense</button>
+    <!-- Export -->
+    <button onclick="exportPeriodExpenses()">Export Period Expenses</button>
+
+    <h3>Expense History</h3>
+    <ul id="periodExpenseList"></ul>
 
     <hr>
 
-    <!-- Select Period -->
-    <h6>Choose when this expense occurred</h6>
-    <button class="period" onclick="selectPeriod(1)">Days 1 – 10</button>
-    <button class="period" onclick="selectPeriod(2)">Days 11 – 20</button>
-    <button class="period" onclick="selectPeriod(3)">Days 21 – 30</button>
-
-    <p id="currentPeriodText" style="text-align:center; font-size:14px;"></p>
-
-    <hr>
-
-    <!-- Period Details -->
-    <h3>View Period Details</h3>
-    <button class="period" onclick="openPeriodDetails(1)">Details: Days 1 – 10</button>
-    <button class="period" onclick="openPeriodDetails(2)">Details: Days 11 – 20</button>
-    <button class="period" onclick="openPeriodDetails(3)">Details: Days 21 – 30</button>
-
-    <hr>
-
-    <!-- Period Progress Bars -->
-    <p style="text-align:center;">Days 1 – 10</p>
-    <div class="progress-container">
-        <div id="p1Bar" class="progress-bar">0%</div>
-    </div>
-
-    <p style="text-align:center;">Days 11 – 20</p>
-    <div class="progress-container">
-        <div id="p2Bar" class="progress-bar">0%</div>
-    </div>
-
-    <p style="text-align:center;">Days 21 – 30</p>
-    <div class="progress-container">
-        <div id="p3Bar" class="progress-bar">0%</div>
-    </div>
+    <button onclick="goBack()">Back to Dashboard</button>
 
 </div>
 
 <script src="script.js"></script>
 <script>
-    loadDashboard();
+    loadPeriodDetails();
 </script>
 
 </body>

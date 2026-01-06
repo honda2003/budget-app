@@ -128,3 +128,26 @@ hr {
     background: #e0e0e0;
     margin: 20px 0;
 }
+.link-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+/* Fix period links (Details buttons) */
+a.period {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #1f3d2b;           /* لون النص */
+    background: #a8d5b2;      /* نفس لون الأزرار */
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+a.period:hover {
+    background: #8fc6a0;
+}

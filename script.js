@@ -34,8 +34,7 @@ function loadDashboard() {
     document.getElementById("spentAmount").innerText = "💸 Spent: " + spent;
     document.getElementById("remainingAmount").innerText = "💰 Remaining: " + remaining;
 
-    let percent = 0;
-    if (budget > 0) percent = Math.floor((spent / budget) * 100);
+    let percent = budget > 0 ? Math.floor((spent / budget) * 100) : 0;
     if (percent > 100) percent = 100;
 
     let bar = document.getElementById("progressBar");
@@ -50,7 +49,7 @@ function loadDashboard() {
    Select Period
    ========================= */
 function selectPeriod(period) {
-    localStorage.setItem("currentPeriod", period);
+    localStorage.setItem("currentPeriod", String(period));
 
     document.getElementById("currentPeriodText").innerText =
         period == 1 ? "Current period: Days 1 - 10" :
@@ -62,7 +61,14 @@ function selectPeriod(period) {
 }
 
 /* =========================
-   Add Expense
+   FIX for Details (used with <a>)
+   ========================= */
+function setPeriod(period) {
+    localStorage.setItem("currentPeriod", String(period));
+}
+
+/* =========================
+   Add Expense (DATE + TIME)
    ========================= */
 function addExpense() {
     let expense = Math.floor(Number(document.getElementById("expenseInput").value));
@@ -79,8 +85,7 @@ function addExpense() {
     }
 
     let budget = Number(localStorage.getItem("monthlyBudget"));
-    let periodBudget = Math.floor(budget / 3);
-    if (periodBudget <= 0) periodBudget = 1;
+    let periodBudget = Math.floor(budget / 3) || 1;
 
     let key = "period" + period + "Spent";
     let periodSpent = Number(localStorage.getItem(key)) || 0;
@@ -96,15 +101,21 @@ function addExpense() {
     localStorage.setItem(key, newTotal);
     localStorage.setItem("spent", Number(localStorage.getItem("spent")) + expense);
 
-    let expenses = JSON.parse(localStorage.getItem("expenses"));
+    let now = new Date();
+    let date = now.toLocaleDateString("en-GB");
+    let time = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+
+    let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
     expenses.push({
         amount: expense,
         period: period,
-        date: new Date().toISOString()
+        date: date,
+        time: time
     });
-    localStorage.setItem("expenses", JSON.stringify(expenses));
 
+    localStorage.setItem("expenses", JSON.stringify(expenses));
     document.getElementById("expenseInput").value = "";
+
     loadDashboard();
 }
 
@@ -113,8 +124,7 @@ function addExpense() {
    ========================= */
 function updatePeriodBars() {
     let budget = Number(localStorage.getItem("monthlyBudget"));
-    let periodBudget = Math.floor(budget / 3);
-    if (periodBudget <= 0) periodBudget = 1;
+    let periodBudget = Math.floor(budget / 3) || 1;
 
     updateSingleBar("p1Bar", localStorage.getItem("period1Spent"), periodBudget);
     updateSingleBar("p2Bar", localStorage.getItem("period2Spent"), periodBudget);
@@ -128,7 +138,6 @@ function updateSingleBar(id, spent, budget) {
     spent = Number(spent) || 0;
     let percent = Math.floor((spent / budget) * 100);
     if (percent > 100) percent = 100;
-    if (percent < 0) percent = 0;
 
     bar.style.width = percent + "%";
     bar.innerText = percent + "%";
@@ -136,18 +145,17 @@ function updateSingleBar(id, spent, budget) {
 }
 
 /* =========================
-   Period Details
+   Period Details (SAFE)
    ========================= */
-function openPeriodDetails(period) {
-    localStorage.setItem("currentPeriod", period);
-    window.location.href = "period.html";
-}
-
 function loadPeriodDetails() {
     let period = localStorage.getItem("currentPeriod");
+    if (!period) {
+        window.location.href = "dashboard.html";
+        return;
+    }
+
     let budget = Number(localStorage.getItem("monthlyBudget"));
-    let periodBudget = Math.floor(budget / 3);
-    if (periodBudget <= 0) periodBudget = 1;
+    let periodBudget = Math.floor(budget / 3) || 1;
 
     let spent = Number(localStorage.getItem("period" + period + "Spent")) || 0;
     let remaining = periodBudget - spent;
@@ -174,18 +182,16 @@ function loadPeriodDetails() {
 }
 
 /* =========================
-   Period Expense List
+   Period Expense List (DATE + TIME)
    ========================= */
 function renderPeriodExpenseList() {
     let list = document.getElementById("periodExpenseList");
     list.innerHTML = "";
 
     let period = localStorage.getItem("currentPeriod");
-    let expenses = JSON.parse(localStorage.getItem("expenses"));
+    let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
-    let filtered = expenses
-        .filter(e => e.period == period)
-        .sort((a, b) => new Date(b.date) - new Date(a.date));
+    let filtered = expenses.filter(e => e.period == period);
 
     if (filtered.length === 0) {
         list.innerHTML = "<li>No expenses recorded</li>";
@@ -194,27 +200,27 @@ function renderPeriodExpenseList() {
 
     filtered.forEach(e => {
         let li = document.createElement("li");
-        li.innerText = "💰 " + e.amount + " | 📅 " + e.date.split("T")[0];
+        li.innerText = `💰 ${e.amount} | 📅 ${e.date} | ⏰ ${e.time}`;
         list.appendChild(li);
     });
 }
 
 /* =========================
-   Export CSV
+   Export CSV (DATE + TIME)
    ========================= */
 function exportPeriodExpenses() {
     let period = localStorage.getItem("currentPeriod");
-    let expenses = JSON.parse(localStorage.getItem("expenses"))
-        .filter(e => e.period == period);
+    let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+    let filtered = expenses.filter(e => e.period == period);
 
-    if (expenses.length === 0) {
+    if (filtered.length === 0) {
         alert("No expenses to export");
         return;
     }
 
-    let csv = "Amount,Date\n";
-    expenses.forEach(e => {
-        csv += `${e.amount},${e.date.split("T")[0]}\n`;
+    let csv = "Amount,Date,Time\n";
+    filtered.forEach(e => {
+        csv += `${e.amount},${e.date},${e.time}\n`;
     });
 
     let blob = new Blob([csv], { type: "text/csv" });
